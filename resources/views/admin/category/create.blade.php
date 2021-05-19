@@ -10,6 +10,15 @@
                     <h6 class="m-0 font-weight-bold text-primary">Category Form</h6>
                 </div>
                 <div class="card-body">
+                    @if ($errors->any())
+                        <div class="alert alert-danger text-white">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                     <form action="{{ route('admin.category.store') }}" method="POST">
                         @csrf
                         <div class="form-group">

@@ -33,7 +33,7 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <a href="" class="btn btn-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                    <a data-toggle="modal" data-target="#deleteModal" href="#" onclick="deleteData({{ $item->id }})" class="btn btn-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i></a>
                                     <a href="{{ route('admin.category.edit',$item->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit" aria-hidden="true"></i></a>
 
                                 </td>
@@ -45,4 +45,10 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function deleteData(id){
+            $("#deleteForm").attr("action",'{{ url("admin/category/") }}'+"/"+id)
+        }
+    </script>
 @endsection

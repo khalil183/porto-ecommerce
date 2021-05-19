@@ -113,6 +113,12 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Category::destroy($id);
+        $notification=array(
+            'messege'=>'Deleted Successfully',
+            'alert-type'=>'success'
+        );
+
+        return redirect()->route('admin.category.index')->with($notification);
     }
 }

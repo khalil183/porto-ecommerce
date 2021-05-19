@@ -3,14 +3,18 @@
 use Illuminate\Support\Facades\Route;
 
 
-
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Auth::routes();
 
+Route::get('/','HomeController@index');
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/product/details/{slug}','HomeController@productDetails')->name('product.details');
+
+// Shopping Cart
+Route::get('cart','CartController@index')->name('cart');
+Route::post('/store/cart','CartController@store')->name('store.cart');
+Route::post('/update/cart','CartController@update')->name('update.cart');
+Route::get('/destroy/cart/item/{rowId}','CartController@destroy')->name('destroy.cart.item');
+Route::get('/destroy/cart/','CartController@allDestroy')->name('destroy.cart');
 
 
 Route::get('/admin/dashboard','Admin\AdminController@index')->name('admin.index');

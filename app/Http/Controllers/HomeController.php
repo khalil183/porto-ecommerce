@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
-
+use App\Category;
+use App\Product;
 class HomeController extends Controller
 {
     /**
@@ -11,10 +11,10 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
 
     /**
      * Show the application dashboard.
@@ -23,6 +23,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $categories=Category::withCount(['products'])->with('products')->get();
+        $categories=$categories->where('products_count','>=',1);
+        return view('user.index',compact('categories'));
+    }
+
+    public function productDetails($slug){
+        $product=Product::where('slug',$slug)->first();
+        return view('user.productDetails',compact('product'));
     }
 }
