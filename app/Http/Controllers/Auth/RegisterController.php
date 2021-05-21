@@ -8,7 +8,9 @@ use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-
+use Illuminate\Http\Request;
+use Str;
+use App\Notifications\UserConfirmation;
 class RegisterController extends Controller
 {
     /*
@@ -38,7 +40,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('guest:web');
     }
 
     /**
@@ -62,12 +64,26 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\User
      */
-    protected function create(array $data)
+    protected function userRegister(Request $request)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+        $this->validate($request,[
+            'name'=>'required',
+            'email'=>'required|email|unique:users',
+            'password'=>'required|confirmed|min:6'
         ]);
+
+        $user=User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'verified_token'=>Str::random(100)
+        ]);
+
+        $user->notify(new UserConfirmation($user));
+        return Redirect()->route('login')->with(['invalidUser'=>'A Confirmation Email has been Sent to You. Please verified your email']);
+    }
+
+    public function showRegisterForm(){
+        return view('auth.register');
     }
 }

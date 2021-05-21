@@ -39,6 +39,8 @@
                                 <td>
                                     <a data-toggle="modal" data-target="#deleteModal" href="#" onclick="deleteData({{ $item->id }})" class="btn btn-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i></a>
                                     <a href="{{ route('admin.product.edit',$item->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                                    <a target="_blank" href="{{ route('product.details',$item->slug) }}" class="btn btn-success btn-sm"><i class="fa fa-eye" aria-hidden="true"></i></a>
+
 
                                 </td>
                             </tr>

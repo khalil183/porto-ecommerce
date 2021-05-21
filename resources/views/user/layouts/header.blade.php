@@ -8,7 +8,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-	<title>Porto - Bootstrap eCommerce Template</title>
+	<title>Porto E-Commerce</title>
 
 	<meta name="keywords" content="HTML5 Template" />
 	<meta name="description" content="Porto - Bootstrap eCommerce Template">
@@ -139,9 +139,9 @@
 							<h6 class="pt-1 line-height-1 pr-2">Call us now<a href="tel:#" class="d-block text-dark pt-1 font1">+123 5678 890</a></h6>
 						</div><!-- End .header-contact -->
 
-						<a href="login.html" class="header-icon login-link pl-1"><i class="icon-user-2"></i></a>
+						<a href="{{ route('user.profile') }}" class="header-icon "><i class="icon-user-2"></i></a>
 
-						<a href="#" class="header-icon pl-1 pr-2"><i class="icon-wishlist-2"></i></a>
+						<a href="{{ route('user.wishlist') }}" class="header-icon pl-1 pr-2"><i class="icon-wishlist-2"></i></a>
 
                         <a href="{{ route('cart') }}" class="header-icon pl-1 pr-2"><i class="icon-shopping-cart"></i><span class="cart-count badge-circle">{{ Cart::count() }}</span></a>
 

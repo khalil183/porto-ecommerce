@@ -103,10 +103,15 @@
                         </div>
                         <h2 class="product-title">
                             <a href="{{ route('product.details',$product->slug) }}">{{ $product->name }}</a>
+
                         </h2>
                         <div class="ratings-container">
                             <div class="product-ratings">
-                                <span class="ratings" style="width:100%"></span><!-- End .ratings -->
+                                @if ($product->reviews->count()>0)
+                                <span class="ratings" style="width:{{ ($product->reviews->sum('rating')/$product->reviews->count())*20 }}%"></span><!-- End .ratings -->
+                                @else
+                                    <span class="ratings" style="width:0%"></span><!-- End .ratings -->
+                                @endif
                                 <span class="tooltiptext tooltip-top"></span>
                             </div>
                             <!-- End .product-ratings -->

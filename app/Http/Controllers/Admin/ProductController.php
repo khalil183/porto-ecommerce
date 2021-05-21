@@ -58,7 +58,7 @@ class ProductController extends Controller
                     ->save($upload_path);
             Product::create([
                 'name'=>$request->name,
-                'slug'=>Str::slug($request->name),
+                'slug'=>Str::slug($request->name).'-'.date('d-m-Y'),
                 'price'=>$request->price,
                 'category_id'=>$request->category,
                 'image'=>$upload_path,
@@ -76,16 +76,6 @@ class ProductController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -132,7 +122,7 @@ class ProductController extends Controller
 
         Product::where('id',$id)->update([
             'name'=>$request->name,
-            'slug'=>Str::slug($request->name),
+            'slug'=>Str::slug($request->name).'-'.date('d-m-Y'),
             'price'=>$request->price,
             'category_id'=>$request->category,
             'image'=>$newImage,

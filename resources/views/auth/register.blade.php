@@ -1,6 +1,6 @@
-@extends('layouts.app')
+@extends('user.layouts.layout')
 
-@section('content')
+@section('user-content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -68,6 +68,8 @@
                                 </button>
                             </div>
                         </div>
+
+                        <a href="{{ route('login') }}">Login here</a>
                     </form>
                 </div>
             </div>

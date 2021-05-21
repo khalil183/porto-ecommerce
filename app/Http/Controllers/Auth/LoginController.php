@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-
+use Illuminate\Http\Request;
+use App\User;
+use Auth;
 class LoginController extends Controller
 {
     /*
@@ -35,6 +37,43 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest')->except('logout');
+        $this->middleware('guest:web')->except('logout');
+    }
+
+    public function userLoginFrom(){
+        return view('auth.login');
+    }
+
+    public function userLogin(Request $request){
+        $this->validate($request,[
+            'email'=>'required',
+            'password'=>'required'
+        ]);
+        $credential=[
+            'email'=> $request->email,
+            'password'=> $request->password
+        ];
+
+        $user=User::where('email',$request->email)->first();
+        if($user){
+            if($user->status==1){
+                if(Auth::guard('web')->attempt($credential,$request->remember)){
+                    return Redirect()->intended(route('home'));
+                }
+            }else return Redirect()->back()->with(['invalidUser'=>'User In-Activate,Please Active user']);
+        }else return Redirect()->back()->with(['invalidUser'=>'User Not Found']);
+
+
+        if(Auth::guard('admin')->attempt($credential,$request->remember)){
+            return Redirect()->intended(route('admin.dashboard'));
+        }
+        return Redirect()->back()->withInput($request->only('email,remember'));
+    }
+
+
+
+    public function logout(){
+        Auth::guard('web')->logout();
+        return Redirect()->route('login');
     }
 }
